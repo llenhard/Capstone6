@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Tasks";
+}
+<h1>@ViewBag.Title</h1>
+<table style="width:100%">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Due on</th>
+        <th>Complete?</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (Task task in ViewBag.Tasks)
+    {
+        <tr>
+            <td>@task.ID. @task.Assigned</td>
+            <td>@task.Desc</td>
+            <td>@task.Due</td>
+            <td><form action="/Home/ToggleComplete"><button type="submit" name="id" value="@task.ID">@task.Complete</button></form></td>
+            <td>@Html.ActionLink("Delete task.", "DelTask", new { id = task.ID })</td>
+        </tr>
+    }
+</table>
+<br />
+<h2>Add Task</h2>
+<form action="/Home/AddTask" style="border-style:solid;border-color:black;border-width:medium;background-color:#bfc0c1;width:25%" method="post">
+    <select required name="whom">
+        @foreach (User user in ViewBag.Valid)
+        {
+            <option value="@user.Name">@user.Name</option>
+        }
+    </select><br />
+    <input type="text" name="desc" required placeholder="Description" /><br />
+    <input type="date" name="due" /><br />
+    <input type="submit" value="Add task" /><br />
+</form>
+
+<br />
+<h3>@ViewBag.msg</h3>
+<br />
